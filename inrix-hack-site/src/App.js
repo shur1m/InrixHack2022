@@ -1,13 +1,19 @@
 import './App.css';
-
-const name = 'Brad'
+import IconButton from './components/IconButton'
 
 function App() {
   return (
-    <div className='container'>
-      <h1> Hello from React </h1>
-      <h2> How are you doing, {name}</h2>
-    </div>
+    <>
+      <div className='container'>
+        <h1 className = 'text-3xl font-bold underline'> The Best Application Ever </h1>
+      </div>
+
+      <div>
+        <IconButton icon = 'Hello' onClick = {() => {console.log('hi')}}/>
+        <button> Two </button>
+        <button> Three </button>
+      </div>
+    </>
   );
 }
 
