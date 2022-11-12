@@ -1,8 +1,12 @@
 from inrix_requests import InrixAPI
 from flask import Flask, jsonify, request
 
+from noiseApi import simple_page
+
 app = Flask(__name__)
 inrix_requests = InrixAPI()
+
+app.register_blueprint(simple_page,"/page")
 
 
 @app.route("/")
