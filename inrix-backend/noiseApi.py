@@ -1,8 +1,8 @@
 from flask import Blueprint
 
 
-simple_page = Blueprint('simple_page', __name__)
+noise = Blueprint('noise', __name__)
 
-@simple_page.route('/page')
+@noise.route('/noise')
 def show():
     return "Hellow World"

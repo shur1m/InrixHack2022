@@ -5,7 +5,7 @@ from inrixAppAPIs import inrix_page
 
 app = Flask(__name__)
 
-app.register_blueprint(simple_page, "/page")
+app.register_blueprint(noise, "/noise")
 app.register_blueprint(inrix_page, "/inrix")
 
 
