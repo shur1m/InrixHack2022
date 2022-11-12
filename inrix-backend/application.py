@@ -1,12 +1,12 @@
 from flask import Flask
 
-from noiseApi import simple_page
+from noiseApi import noise
 from inrixAppAPIs import inrix_page
 
 app = Flask(__name__)
 
-app.register_blueprint(noise, "/noise")
-app.register_blueprint(inrix_page, "/inrix")
+app.register_blueprint(noise, url_prefix="/noise")
+app.register_blueprint(inrix_page, url_prefix="/inrix")
 
 
 @app.route("/")
