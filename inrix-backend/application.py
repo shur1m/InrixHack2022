@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 import json
 import requests
+import asyncio
+import aiohttp
 
 from ApiWrappers.inrixAppAPIs import inrix_page
 from ApiWrappers.weatherApi import weather_page
@@ -15,51 +17,60 @@ app.register_blueprint(inrix_page, url_prefix="/inrix")
 app.register_blueprint(weather_page, url_prefix='/weather')
 app.register_blueprint(inrix_distance, url_prefix='/route')
 app.register_blueprint(besttime_page, url_prefix='/besttime')
-app.register_blueprint(noise_page,url_prefix='/noise')
-app.register_blueprint(geocode_page,url_prefix='/geocode')
+app.register_blueprint(noise_page, url_prefix='/noise')
+app.register_blueprint(geocode_page, url_prefix='/geocode')
 
-URL="https://inrix-hack-api.herokuapp.com/"
+
+async def fetch(url, params):
+    async with aiohttp.request('GET', url, params=params) as resp:
+        assert resp.status == 200
+        data = await resp.read()
+        return json.loads(data)
+
+
 @app.route("/")
 def home():
     return "A group's Inrix API Hackathon Home Page"
-routes=["/gecode/txtToPoint","/weather/weather","/route/distancetime","/noise/getnoise","/besttime/busyness",]
-url="https://inrix-hack-api.herokuapp.com/"
+
+
+routes = ["/gecode/txtToPoint", "/weather/weather", "/route/distancetime", "/noise/getnoise", "/besttime/busyness"]
+HOME_URL = "https://inrix-hack-api.herokuapp.com/"
+
+
 # distance , travelTime, indor,outdoor,Location,address,noise
 @app.route("/places")
-def places():
-    lat=request.args.get("lat")
-    lon=request.args.get("long")
+async def places():
+    lat = request.args.get("lat")
+    lon = request.args.get("long")
     with open("./ConfigFiles/locations.json", "r") as fp:
         res = json.loads(fp.read())
 
-    weather=[]
-    noise=[]
-    distance=[]
-    time=[]
-    busyness=[]
-    indoor=[]
+    weather = []
+    noise = []
+    distance = []
+    time = []
+    busyness = []
+    indoor = []
 
     for i in range(len(res)):
-        #calculates weather score
-        weather_result=requests.get(url+routes[1],params={"lat":res[i]["Latitude"],"long":res[i]["Longitude"]}).json()
-        weather.append((abs(weather_result["current_weather"]["temperature"]-70),i))
-       
-        #caluclates the distance and time
-        distancetime_result=requests.get(url+routes[2],params={"wp_1lat":lat,"wp_1long":lon,"wp_2lat":res[i]["Latitude"],"wp_2long":res[i]["Longitude"]}).json()
-        distance.append((distancetime_result["totalDistance"],i))
-        time.append((distancetime_result["travelTime"],i))
+        # Calculates weather score
+        weather_result = await fetch(HOME_URL + routes[1],
+                                     params={"lat": res[i]["Latitude"], "long": res[i]["Longitude"]})
+        weather.append((abs(weather_result["current_weather"]["temperature"] - 70), i))
 
-        #busyness_result=requests.get(url+routes[4],{"name":res[i]["Name"],"address":res[i]["Address"]}).json()
-        busyness.append((res[i]["Busyness"],i))
+        # Calculates the distance and time
+        distancetime_result = await fetch(HOME_URL + routes[2],
+                                          params={"wp_1lat": lat, "wp_1long": lon, "wp_2lat": res[i]["Latitude"],
+                                                  "wp_2long": res[i]["Longitude"]})
+        distance.append((distancetime_result["totalDistance"], i))
+        time.append((distancetime_result["travelTime"], i))
 
-        noise_result=requests.get(url+routes[3],params={"lat":res[i]["Latitude"],"long":res[i]["Longitude"]}).json()
-        noise.append((noise_result[0]['score'],i))
-    print(noise)
-    print(weather)
-    print(distance)
-    print(time)
+        # busyness_result = await fetch(HOME_URL+routes[4],{"name":res[i]["Name"],"address":res[i]["Address"]})
+        busyness.append((res[i]["Busyness"], i))
 
-
+        noise_result = await fetch(HOME_URL + routes[3],
+                                   params={"lat": res[i]["Latitude"], "long": res[i]["Longitude"]})
+        noise.append((noise_result[0]['score'], i))
 
     return "Hello"
 
