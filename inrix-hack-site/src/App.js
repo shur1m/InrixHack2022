@@ -24,7 +24,7 @@ function App() {
     outdoor: true,
   })
 
-  const [coordinates, setCoordinates] = useState([])
+  const [responses, setResponses] = useState([])
 
   const handleSearchBarChange = (e) => {
     e.preventDefault();
@@ -34,6 +34,10 @@ function App() {
   //hardcoded data
   let results = myData
 
+  const onSearch = () => {
+    setResponses(results)
+  }
+
   let coords = Geolocation()
   console.log(coords != undefined)
 
@@ -42,26 +46,28 @@ function App() {
     <>
       {/* sidebar to display results */}
       <div className = 'overflow-auto bg-gray-600 sidebar fixed left-8 top-8 z-30 rounded-3xl  text-white'>
-        {results.map((result, index) => (
+        {responses.map((response, index) => (
           <div key = {index} className = 'location bg-gray-500 my-2 p-2 rounded-lg'>
-            <h3>{result.Name}</h3>
-            <p className = 'text-sm'>{result.Address}</p>
+            <h3>{response.Name}</h3>
+            <p className = 'text-sm'>{response.Address}</p>
             
           </div>
         ))}
       </div>
       
       {/* display map */}
-      <MapContainer className = 'h-screen z-0' center={{lng: -122.673447, lat: 45.522558}} zoom={12} scrollWheelZoom={false} >
+      <MapContainer className = 'h-screen z-0' center={{lng:  -122.4194, lat:37.7749}} zoom={12} scrollWheelZoom={false} >
          <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
         
-        <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={{lng: -122.673447, lat: 45.522558}}>
-          <Popup>
-              Some kind of description. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        {responses.map((response, index) => (
+          <Marker key = {index} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={{lng: response.Longitude, lat: response.Latitude}}>
+            <Popup>
+                {response.Address}
+            </Popup>
+          </Marker>
+        ))}
         
       </MapContainer>
 
@@ -79,7 +85,7 @@ function App() {
             onChange={handleSearchBarChange} value={searchInput}
           />
 
-          <IconButton onClick = {() => {console.log('hi')}} icon = {<BiSearch/>}/>
+          <IconButton onClick = {() => {onSearch()}} icon = {<BiSearch/>}/>
           <IconButton onClick = {() => setShowFilter(!showFilter) } icon = {<BiFilterAlt/>}/>
         </div>
 
