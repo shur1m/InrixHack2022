@@ -1,3 +1,12 @@
-
+*.env
 .DS_Store
 inrix-hack-site/node_modules
+inrix-backend/inrix_app.json
+*.pyc
+
+
+inrix-backend/ConfigFiles/inrix_app.json
+inrix-backend/ConfigFiles/ptv.json
+inrix-backend/ConfigFiles/besttime.json
+inrix-backend/ConfigFiles/howloud.json
+*.pyc
