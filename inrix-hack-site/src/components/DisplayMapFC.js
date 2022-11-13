@@ -15,6 +15,8 @@ export const DisplayMapFC = () => {
     // `mapRef.current` will be `undefined` when this hook first runs; edge case that
     if (!mapRef.current) return;
     const H = window.H;
+    console.log(process.env.REACT_APP_HERE_KEY)
+
     const platform = new H.service.Platform({
         apikey: process.env.REACT_APP_HERE_KEY
     });

@@ -2,7 +2,8 @@ import './App.css';
 import {useState} from 'react'
 
 import IconButton from './components/IconButton'
-import { BiSearch, BiFilterAlt } from "react-icons/bi";
+import { BiSearch, BiFilterAlt } from "react-icons/bi"
+import {DisplayMapFC} from "./components/DisplayMapFC"
 
 function App() {
   const searchBar = () => {}
@@ -56,6 +57,8 @@ function App() {
       <div className = 'overflow-auto bg-gray-600 test fixed left-0 top-8 z-30 rounded-3xl p-4 text-white'>
         {results.map((result, index) => (<p key = {index}>{result.location}</p>))}
       </div>
+
+      <DisplayMapFC/>
 
       {/* filter and search bar  */}
       <div>
