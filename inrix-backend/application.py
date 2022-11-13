@@ -43,6 +43,10 @@ HOME_URL = "https://inrix-hack-api.herokuapp.com/"
 async def places():
     lat = request.args.get("lat")
     lon = request.args.get("long")
+    distance_thres=request.args.get("distance")
+    time_thres=request.args.get("time")
+    indoor=bool(request.args.get("indoor"))
+    noise_thres=float(request.args.get("noise"))
 
     with open("./ConfigFiles/locations.json", "r") as fp:
         res = json.loads(fp.read())
@@ -52,37 +56,67 @@ async def places():
     distance = []
     time = []
     busyness = []
-    indoor = []
+    
 
+    #prunes out locations based on outdoor cs indoor
     for i in range(len(res)):
-        # Calculates weather score
-        weather_result = handle_weather_req(res[i]["Longitude"], res[i]["Latitude"])
-        weather.append((abs(weather_result["current_weather"]["temperature"] - 70), i))
+        if indoor and not res[i]["Indoor"]:
+            res[i]=None
+    #prunes out be distance
+    for i in range(len(res)):
+        if not res[i]:
+            continue
 
         # Calculates the distance and time
         distancetime_result = await fetch(HOME_URL + routes[2],
                                           params={"wp_1lat": lat, "wp_1long": lon, "wp_2lat": res[i]["Latitude"],
                                                   "wp_2long": res[i]["Longitude"]})
         distance.append((distancetime_result["totalDistance"], i))
+        if float(distancetime_result["totalDistance"]) > float(distance_thres):
+            res[i]=None
+            continue
         time.append((distancetime_result["travelTime"], i))
-
-        # busyness_result = await fetch(HOME_URL+routes[4],{"name":res[i]["Name"],"address":res[i]["Address"]})
-        busyness.append((res[i]["Busyness"], i))
-
-        noise_result = await fetch(HOME_URL + routes[3],
-                                   params={"lat": res[i]["Latitude"], "long": res[i]["Longitude"]})
-        noise.append((noise_result[0]['score'], i))
-
-        
-        
-
-
-
-        
-
-        res[i]["NoiseScore"]=noise_result[0]['score']
+        if float(distancetime_result["travelTime"]) > float(time_thres):
+            res[i]=None
+            continue
         res[i]["travelTime"]=distancetime_result["travelTime"]
         res[i]["totalDistance"]=distancetime_result["totalDistance"]
+    
+
+    
+
+
+    for i in range(len(res)):
+        if not res[i]:
+            continue
+        # busyness_result = await fetch(HOME_URL+routes[4],{"name":res[i]["Name"],"address":res[i]["Address"]})
+        busyness.append((res[i]["Busyness"], i))
+    for i in range(len(res)):
+        if not res[i]:
+            continue
+        noise_result = await fetch(HOME_URL + routes[3],
+                                   params={"lat": res[i]["Latitude"], "long": res[i]["Longitude"]})
+        if float(noise_result[0]['score']) > noise_thres:
+            res[i]=None
+        noise.append((noise_result[0]['score'], i))
+        res[i]["NoiseScore"]=noise_result[0]['score']
+    for i in range(len(res)):
+        if not res[i]:
+            continue
+        # Calculates weather score
+
+        # Calculates weather score
+        weather_result = handle_weather_req(res[i]["Longitude"], res[i]["Latitude"])
+        weather.append((abs(weather_result["current_weather"]["temperature"] - 70), i))
+
+                        
+        
+
+    
+
+        
+
+    
 
     score=[[0,i] for i in range(len(res))]
 
@@ -95,19 +129,31 @@ async def places():
     busyness.sort()
     
     #calculate remote 
-    for i in range(len(res)):
-        score[weather[i][1]][0]+=i
-        score[noise[i][1]][0]+=i
-        score[distance[i][1]][0]+=i
+    for i in range(len(time)):
         score[time[i][1]][0]+=i
+    for i in range(len(distance)):
+        score[distance[i][1]][0]+=i
+    for i in range(len(weather)):
+        score[weather[i][1]][0]+=i
+    for i in range(len(busyness)):
         score[busyness[i][1]][0]+=i
+    for i in range(len(noise)):
+        score[noise[i][1]][0]+=i
+
     score.sort()
 
-
+    
     for i in range(len(score)):
+        if not res[score[i][1]] :
+            continue
         res[score[i][1]]["Score"]=score[i][0]
-        score[i]=res[score[i][1]]
-    return jsonify(score)
+
+    
+    while(None in res):
+        res.remove(None)
+
+
+    return res
     
         
 
