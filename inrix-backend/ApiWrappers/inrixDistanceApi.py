@@ -48,5 +48,5 @@ def get_route():
     }
 
     route = inrix_requests.get("https://api.iq.inrix.com/route", params)
-    return route.get('result').get('trip').get('routes')[0].get('points').get('coordinates')
+    return jsonify(route.get('result').get('trip').get('routes')[0].get('points').get('coordinates'))
     
