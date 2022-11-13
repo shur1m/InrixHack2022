@@ -85,7 +85,6 @@ function App() {
   }
 
   let coords = Geolocation()
-  console.log(coords != undefined)
 
 
   return (
