@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import json
 import requests
 import asyncio
@@ -20,6 +21,8 @@ app.register_blueprint(besttime_page, url_prefix='/besttime')
 app.register_blueprint(noise_page, url_prefix='/noise')
 app.register_blueprint(geocode_page, url_prefix='/geocode')
 
+CORS(app)
+#app.config["CORS_ORIGINS"] = ["http://localhost"]
 
 async def fetch(url, params):
     async with aiohttp.request('GET', url, params=params) as resp:

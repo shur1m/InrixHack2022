@@ -3,3 +3,5 @@ flask
 gunicorn
 aiohttp
 asgiref
+flask_cors
+
