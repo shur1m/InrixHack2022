@@ -5,7 +5,7 @@ import asyncio
 import aiohttp
 
 from ApiWrappers.inrixAppAPIs import inrix_page
-from ApiWrappers.weatherApi import weather_page
+from ApiWrappers.weatherApi import weather_page, handle_weather_req
 from ApiWrappers.inrixDistanceApi import inrix_distance
 from ApiWrappers.bestTimeApi import besttime_page
 from ApiWrappers.noiseApi import noise_page
@@ -55,10 +55,8 @@ async def places():
     indoor = []
 
     for i in range(len(res)):
-
         # Calculates weather score
-        weather_result = await fetch(HOME_URL + routes[1],
-                                     params={"lat": res[i]["Latitude"], "long": res[i]["Longitude"]})
+        weather_result = handle_weather_req(res[i]["Longitude"], res[i]["Latitude"])
         weather.append((abs(weather_result["current_weather"]["temperature"] - 70), i))
 
         # Calculates the distance and time
