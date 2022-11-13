@@ -54,14 +54,14 @@ function App() {
   return (
     <>
       {/* sidebar to display results */}
-      <div className = 'overflow-auto bg-gray-600 test fixed left-0 top-8 z-30 rounded-3xl p-4 text-white'>
+      <div className = 'overflow-auto bg-gray-600 sidebar fixed left-0 top-8 z-30 rounded-3xl p-4 text-white'>
         {results.map((result, index) => (<p key = {index}>{result.location}</p>))}
       </div>
 
       <DisplayMapFC/>
 
       {/* filter and search bar  */}
-      <div>
+      <div className = 'fixed left-0 top-0 z-10 w-screen'>
         <div className = 'flex justify-center items-center'>
           <h1 className ='text-center pt-3'> Hello, Let's Find Someplace Quiet </h1>
         </div>
