@@ -7,6 +7,8 @@ import {DisplayMapFC} from "./components/DisplayMapFC"
 import Geolocation from "./components/Geolocation"
 import myData from './data.json';
 
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import { Icon } from 'leaflet';
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
     indoor: true,
     outdoor: true,
   })
+
+  const [coordinates, setCoordinates] = useState([])
 
   const handleSearchBarChange = (e) => {
     e.preventDefault();
@@ -48,11 +52,17 @@ function App() {
       </div>
       
       {/* display map */}
-      <MapContainer className = 'h-screen z-0' center={{lng: -122.673447, lat: 45.522558}} zoom={10} scrollWheelZoom={false} >
+      <MapContainer className = 'h-screen z-0' center={{lng: -122.673447, lat: 45.522558}} zoom={12} scrollWheelZoom={false} >
          <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+        
+        <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={{lng: -122.673447, lat: 45.522558}}>
+          <Popup>
+              Some kind of description. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+        
       </MapContainer>
 
       {/* filter and search bar  */}
