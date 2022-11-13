@@ -18,19 +18,50 @@ app.register_blueprint(besttime_page, url_prefix='/besttime')
 app.register_blueprint(noise_page,url_prefix='/noise')
 app.register_blueprint(geocode_page,url_prefix='/geocode')
 
+URL="https://inrix-hack-api.herokuapp.com/"
 @app.route("/")
 def home():
     return "A group's Inrix API Hackathon Home Page"
-
-
-# distance , travelTime, indor,outdoor,Location,address
+routes=["/gecode/txtToPoint","/weather/weather","/route/distancetime","/noise/getnoise","/besttime/busyness",]
+url="https://inrix-hack-api.herokuapp.com/"
+# distance , travelTime, indor,outdoor,Location,address,noise
 @app.route("/places")
 def places():
+    lat=request.args.get("lat")
+    lon=request.args.get("long")
     with open("./ConfigFiles/locations.json", "r") as fp:
         res = json.loads(fp.read())
 
-    return jsonify(res)
+    weather=[]
+    noise=[]
+    distance=[]
+    time=[]
+    busyness=[]
+    indoor=[]
 
+    for i in range(len(res)):
+        #calculates weather score
+        weather_result=requests.get(url+routes[1],params={"lat":res[i]["Latitude"],"long":res[i]["Longitude"]}).json()
+        weather.append((abs(weather_result["current_weather"]["temperature"]-70),i))
+       
+        #caluclates the distance and time
+        distancetime_result=requests.get(url+routes[2],params={"wp_1lat":lat,"wp_1long":lon,"wp_2lat":res[i]["Latitude"],"wp_2long":res[i]["Longitude"]}).json()
+        distance.append((distancetime_result["totalDistance"],i))
+        time.append((distancetime_result["travelTime"],i))
+
+        #busyness_result=requests.get(url+routes[4],{"name":res[i]["Name"],"address":res[i]["Address"]}).json()
+        busyness.append((res[i]["Busyness"],i))
+
+        noise_result=requests.get(url+routes[3],params={"lat":res[i]["Latitude"],"long":res[i]["Longitude"]}).json()
+        noise.append((noise_result[0]['score'],i))
+    print(noise)
+    print(weather)
+    print(distance)
+    print(time)
+
+
+
+    return "Hello"
 
 
 

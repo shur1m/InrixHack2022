@@ -11,7 +11,6 @@ def get_distance_and_travel_time():
         "format": "json",
         "wp_1": f'{request.args.get("wp_1lat")},{request.args.get("wp_1long")}',
         "wp_2": f'{request.args.get("wp_2lat")},{request.args.get("wp_2long")}'}
-
     find_routes = inrix_requests.get("https://api.iq.inrix.com/findRoute", params)
     print(find_routes)
     return jsonify({
