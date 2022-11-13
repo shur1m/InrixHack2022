@@ -53,7 +53,7 @@ function App() {
   return (
     <>
       {/* sidebar to display results */}
-      <div className = 'bg-gray-600 test fixed left-0 top-8 z-30 rounded-3xl p-4 text-white'>
+      <div className = 'overflow-auto bg-gray-600 test fixed left-0 top-8 z-30 rounded-3xl p-4 text-white'>
         {results.map((result, index) => (<p key = {index}>{result.location}</p>))}
       </div>
 
