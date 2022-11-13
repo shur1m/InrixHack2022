@@ -1,5 +1,6 @@
 import requests
 import json
+import datetime
 
 GET_TOKEN_URL = "https://api.iq.inrix.com/auth/v1/appToken"
 
@@ -7,9 +8,13 @@ GET_TOKEN_URL = "https://api.iq.inrix.com/auth/v1/appToken"
 class InrixAPI:
     def __init__(self):
         self.app_token = None
-
+        self.expire_date=""
+        self.c=0
     def get(self, url, params):
-        self.app_token = self.get_auth_token()
+        if not self.expire_date or datetime.datetime.strptime(self.expire_date,'%Y-%m-%dT%H:%M:%S.%fZ') < datetime.datetime.now():
+            self.app_token = self.get_auth_token()
+            self.c+=1
+        #print(self.c)
         header = {"Authorization": f"Bearer {self.app_token}"}
         result = requests.get(url, headers=header, params=params)
         return result.json()
@@ -30,5 +35,6 @@ class InrixAPI:
         if app_token_request.status_code == 200:
             res = app_token_request.json()
             self.app_token = res["result"]["token"]
+            self.expire_date=res["result"]["expiry"]
             return self.app_token
         return None

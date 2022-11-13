@@ -84,17 +84,18 @@ async def places():
     
 
 
-    for i in range(len(res)):
-        if not res[i]:
-            continue
+    #for i in range(len(res)):
+    #    if not res[i]:
+    #        continue
         # busyness_result = await fetch(HOME_URL+routes[4],{"name":res[i]["Name"],"address":res[i]["Address"]})
-        busyness.append((res[i]["Busyness"], i))
+    #    busyness.append((res[i]["Busyness"], i))
     for i in range(len(res)):
         if not res[i]:
             continue
         noise_result = handle_noise_req(res[i]["Latitude"], res[i]["Longitude"])
         if float(noise_result[0]['score']) > noise_thres:
             res[i]=None
+            continue
         noise.append((noise_result[0]['score'], i))
         res[i]["NoiseScore"]=noise_result[0]['score']
     for i in range(len(res)):
@@ -116,9 +117,8 @@ async def places():
     
 
     score=[[0,i] for i in range(len(res))]
-
-
     time=[(float(x[0]),x[1]) for x in time]
+
     weather.sort()
     noise.sort()
     distance.sort()

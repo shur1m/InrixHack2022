@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from inrix_requests import InrixAPI
+import time
 inrix_requests = InrixAPI()
 
 inrix_distance = Blueprint('inrix_distance', __name__)
@@ -11,8 +12,8 @@ def handle_dist_time_req(wp_1lat, wp_1long, wp_2lat, wp_2long):
         "wp_1": f'{wp_1lat},{wp_1long}',
         "wp_2": f'{wp_2lat},{wp_2long}'}
     find_routes = inrix_requests.get("https://api.iq.inrix.com/findRoute", params)
-    print(find_routes)
-
+    #print(find_routes)
+    time.sleep(.2)
     return {
         "travelTime": find_routes.get('result').get('trip').get("routes")[0].get('totalDistance'),
         "totalDistance": find_routes.get('result').get('trip').get("routes")[0].get('travelTimeMinutes')
