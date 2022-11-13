@@ -39,9 +39,11 @@ HOME_URL = "https://inrix-hack-api.herokuapp.com/"
 
 # distance , travelTime, indor,outdoor,Location,address,noise
 @app.route("/places")
+
 async def places():
     lat = request.args.get("lat")
     lon = request.args.get("long")
+
     with open("./ConfigFiles/locations.json", "r") as fp:
         res = json.loads(fp.read())
 
@@ -53,6 +55,7 @@ async def places():
     indoor = []
 
     for i in range(len(res)):
+
         # Calculates weather score
         weather_result = await fetch(HOME_URL + routes[1],
                                      params={"lat": res[i]["Latitude"], "long": res[i]["Longitude"]})
@@ -72,7 +75,43 @@ async def places():
                                    params={"lat": res[i]["Latitude"], "long": res[i]["Longitude"]})
         noise.append((noise_result[0]['score'], i))
 
-    return "Hello"
+        
+        
+
+
+
+        
+
+        res[i]["NoiseScore"]=noise_result[0]['score']
+        res[i]["travelTime"]=distancetime_result["travelTime"]
+        res[i]["totalDistance"]=distancetime_result["totalDistance"]
+
+    score=[[0,i] for i in range(len(res))]
+
+
+    time=[(float(x[0]),x[1]) for x in time]
+    weather.sort()
+    noise.sort()
+    distance.sort()
+    time.sort()
+    busyness.sort()
+    
+    #calculate remote 
+    for i in range(len(res)):
+        score[weather[i][1]][0]+=i
+        score[noise[i][1]][0]+=i
+        score[distance[i][1]][0]+=i
+        score[time[i][1]][0]+=i
+        score[busyness[i][1]][0]+=i
+    score.sort()
+
+
+    for i in range(len(score)):
+        res[score[i][1]]["Score"]=score[i][0]
+        score[i]=res[score[i][1]]
+    return jsonify(score)
+    
+        
 
 
 

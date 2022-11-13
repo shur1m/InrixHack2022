@@ -9,3 +9,4 @@ inrix-backend/ConfigFiles/inrix_app.json
 inrix-backend/ConfigFiles/ptv.json
 inrix-backend/ConfigFiles/besttime.json
 inrix-backend/ConfigFiles/howloud.json
+*.pyc
