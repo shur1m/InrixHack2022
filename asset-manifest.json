@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/InrixHack2022/static/css/main.1b41d1ca.css",
-    "main.js": "/InrixHack2022/static/js/main.f62187f5.js",
+    "main.css": "/InrixHack2022/static/css/main.1fcaa5ae.css",
+    "main.js": "/InrixHack2022/static/js/main.0458f231.js",
     "static/js/787.da5cb1e8.chunk.js": "/InrixHack2022/static/js/787.da5cb1e8.chunk.js",
     "index.html": "/InrixHack2022/index.html",
-    "main.1b41d1ca.css.map": "/InrixHack2022/static/css/main.1b41d1ca.css.map",
-    "main.f62187f5.js.map": "/InrixHack2022/static/js/main.f62187f5.js.map",
+    "main.1fcaa5ae.css.map": "/InrixHack2022/static/css/main.1fcaa5ae.css.map",
+    "main.0458f231.js.map": "/InrixHack2022/static/js/main.0458f231.js.map",
     "787.da5cb1e8.chunk.js.map": "/InrixHack2022/static/js/787.da5cb1e8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1b41d1ca.css",
-    "static/js/main.f62187f5.js"
+    "static/css/main.1fcaa5ae.css",
+    "static/js/main.0458f231.js"
   ]
 }
