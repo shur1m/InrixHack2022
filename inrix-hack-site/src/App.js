@@ -36,7 +36,7 @@ function App() {
       {/* sidebar to display results */}
       <div className = 'overflow-auto bg-gray-600 sidebar fixed left-8 top-8 z-30 rounded-3xl  text-white'>
         {results.map((result, index) => (
-          <div key = {index} className = 'location h-28 bg-gray-500 my-2 p-2 rounded-lg'>
+          <div key = {index} className = 'location bg-gray-500 my-2 p-2 rounded-lg'>
             <h3>{result.Name}</h3>
             <p className = 'text-sm'>{result.Address}</p>
             
