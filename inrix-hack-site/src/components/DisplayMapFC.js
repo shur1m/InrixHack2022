@@ -1,17 +1,17 @@
 // src/DisplayMapFC.js
 
-import * as React from 'react';
+import {useLayoutEffect, useRef} from 'react';
 
 export const DisplayMapFC = () => {
   // Create a reference to the HTML element we want to put the map on
-  const mapRef = React.useRef(null);
+  const mapRef = useRef(null);
 
   /**
    * Create the map instance
    * While `useEffect` could also be used here, `useLayoutEffect` will render
    * the map sooner
    */
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     // `mapRef.current` will be `undefined` when this hook first runs; edge case that
     if (!mapRef.current) return;
     const H = window.H;

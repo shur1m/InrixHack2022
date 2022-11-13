@@ -4,6 +4,8 @@ import {useState} from 'react'
 import IconButton from './components/IconButton'
 import { BiSearch, BiFilterAlt } from "react-icons/bi"
 import {DisplayMapFC} from "./components/DisplayMapFC"
+import Geolocation from "./components/Geolocation"
+import myData from './data.json';
 
 function App() {
   const searchBar = () => {}
@@ -24,46 +26,19 @@ function App() {
   }
 
   //hardcoded data
-  let results = [
-    {
-      location: 'My house',
-      travelTime: 20,
-      distance: 0,
-      weather: 'rainy',
-    },
-    {
-      location: 'My house',
-      travelTime: 20,
-      distance: 0,
-      weather: 'rainy',
-    },
-    {
-      location: 'My house',
-      travelTime: 20,
-      distance: 0,
-      weather: 'rainy',
-    },
-    {
-      location: 'My house',
-      travelTime: 20,
-      distance: 0,
-      weather: 'rainy',
-    },
-    {
-      location: 'My house',
-      travelTime: 20,
-      distance: 0,
-      weather: 'rainy',
-    },
-  ]
+  let results = myData
+
+  let coords = Geolocation()
+  console.log(coords != undefined)
 
   return (
     <>
       {/* sidebar to display results */}
-      <div className = 'overflow-auto bg-gray-600 sidebar fixed left-0 top-8 z-30 rounded-3xl py-2 text-white'>
+      <div className = 'overflow-auto bg-gray-600 sidebar fixed left-8 top-8 z-30 rounded-3xl  text-white'>
         {results.map((result, index) => (
-          <div className = 'location flex h-28 bg-gray-500 my-2 p-2 rounded-lg'>
-            <h3>{result.location}</h3>
+          <div key = {index} className = 'location h-28 bg-gray-500 my-2 p-2 rounded-lg'>
+            <h3>{result.Name}</h3>
+            <p className = 'text-sm'>{result.Address}</p>
             
           </div>
         ))}
