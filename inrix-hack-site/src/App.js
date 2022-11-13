@@ -7,11 +7,13 @@ import {DisplayMapFC} from "./components/DisplayMapFC"
 import Geolocation from "./components/Geolocation"
 import getLocations from './actions/GetLocations';
 import getRoute from './actions/GetRoute';
+import getCoords from './actions/GetCoords';
 import myData from './data.json'
 
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import greenLeaf from "./redPin.png"
 import { Icon } from 'leaflet';
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, useMap, Marker, Popup, Polyline } from 'react-leaflet'
 
 function App() {
 
@@ -43,14 +45,27 @@ function App() {
 
   //query the api and place everything in sidebar and map
   const onSearch = () => {
-    //SET THIS BACK LATER, AND CHANGE PARAMS TO QUERYPARAMS
-    setResponses(results)
+    if (searchInput){
+      //call api and set the queryparams
+      getCoords({text: searchInput})
+        .then((result) => result.json())
+        .then(result => setQueryParams({
+          ...queryParams, 
+          lat: result[0].referencePosition.latitude,
+          long: result[0].referencePosition.longitude}))
+        .then(() => finalizeSearch())
+      return
+    }
 
-    // getLocations(queryParams)
-    // .then((result) => result.json())
-    // .then((result) => {
-    //   setResponses(result)
-    // })
+    finalizeSearch()    
+  }
+
+  const finalizeSearch = () => {
+    getLocations(queryParams)
+    .then((result) => result.json())
+    .then((result) => {
+      setResponses(result)
+    })
   }
 
   const onSelection = (index) => {
@@ -87,19 +102,26 @@ function App() {
       </div>
       
       {/* display map */}
-      <MapContainer className = 'h-screen z-0' center={{lng:  -122.4194, lat:37.7749}} zoom={12} scrollWheelZoom={false} >
+      <MapContainer className = 'h-screen z-0' center={{lng: queryParams.long, lat: queryParams.lat}} zoom={12} scrollWheelZoom={false} >
          <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
         
+        <Marker icon={new Icon({iconUrl: greenLeaf, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={{lng: queryParams.long, lat: queryParams.lat}}>
+          <Popup>
+            You're here!
+          </Popup>
+        </Marker>
+
         {responses.map((response, index) => (
-          <Marker key = {index} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={{lng: response.Longitude, lat: response.Latitude}}>
+          <Marker key = {index} icon={new Icon({iconUrl: markerIconPng, iconSize: (index !== selected ? [25, 41] : [37.5, 61.5]), iconAnchor: [12, 41]})}  position={{lng: response.Longitude, lat: response.Latitude}}>
             <Popup>
                 {response.Address}
             </Popup>
           </Marker>
         ))}
-        
+  
+        <Polyline pathOptions = {{color: 'lime'}} positions = {route}/>
       </MapContainer>
 
       {/* filter and search bar  */}
