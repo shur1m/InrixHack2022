@@ -43,7 +43,8 @@ function App() {
           </div>
         ))}
       </div>
-
+      
+      {/* display map */}
       <DisplayMapFC/>
 
       {/* filter and search bar  */}
