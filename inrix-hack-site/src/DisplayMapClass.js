@@ -11,6 +11,8 @@ export class DisplayMapClass extends React.Component {
 
   componentDidMount() {
     const H = window.H;
+    console.log("API KEY",process.env.REACT_APP_HERE_KEY);
+
     const platform = new H.service.Platform({
         apikey: process.env.REACT_APP_HERE_KEY
     });
