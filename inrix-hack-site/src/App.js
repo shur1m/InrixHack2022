@@ -6,35 +6,32 @@ import { BiSearch, BiFilterAlt } from "react-icons/bi"
 import {DisplayMapFC} from "./components/DisplayMapFC"
 import Geolocation from "./components/Geolocation"
 import getLocations from './actions/GetLocations';
-import myData from './data.json';
+import getRoute from './actions/GetRoute';
+import myData from './data.json'
 
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { Icon } from 'leaflet';
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 
 function App() {
-  const params = {
-    lat: 37.742120,
-    long: -122.480110,
-    noise: 70,
-    distance: 20,
-    time: 10,
-    indoor: false,
-  }
 
   const searchBar = () => {}
   const [searchInput, setSearchInput] = useState("")
   const [showFilter, setShowFilter] = useState(false)
   const [queryParams, setQueryParams] = useState({
-    distance: 10,
+    lat: 37.742120,
+    long: -122.480110,
+    distance: 20,
     travelTime: 10,
-    noiseLevel: 5,
+    noiseLevel: 70,
     busyLevel: 5,
-    indoor: true,
+    indoor: false,
     outdoor: true,
   })
 
   const [responses, setResponses] = useState([])
+  const [selected, setSelected] = useState(-1)
+  const [route, setRoute] = useState([])
 
   const handleSearchBarChange = (e) => {
     e.preventDefault();
@@ -46,11 +43,10 @@ function App() {
 
   //query the api and place everything in sidebar and map
   const onSearch = () => {
-    //SET THIS BACK LATER
+    //SET THIS BACK LATER, AND CHANGE PARAMS TO QUERYPARAMS
     setResponses(results)
-    
 
-    // getLocations(params)
+    // getLocations(queryParams)
     // .then((result) => result.json())
     // .then((result) => {
     //   setResponses(result)
@@ -59,6 +55,18 @@ function App() {
 
   const onSelection = (index) => {
     console.log(index)
+
+    //set selected for ui
+    setSelected(index)
+
+    //request api route
+    getRoute({
+      w1lat: queryParams.lat, 
+      w1long: queryParams.long, 
+      w2lat: responses[index].Latitude, 
+      w2long: responses[index].Longitude})
+      .then((res) => res.json())
+      .then((res) => setRoute(res))
   }
 
   let coords = Geolocation()
@@ -70,7 +78,7 @@ function App() {
       {/* sidebar to display results */}
       <div className = 'overflow-auto bg-gray-600 sidebar fixed left-8 top-8 z-30 rounded-3xl  text-white'>
         {responses.map((response, index) => (
-          <div key = {index} className = 'location bg-gray-500 my-2 p-2 rounded-lg' onClick = {() => {onSelection(index)}}>
+          <div key = {index} className = {`location ${index == selected ? 'bg-blue-800' : 'bg-gray-500'} my-2 p-2 rounded-lg`} onClick = {() => {onSelection(index)}}>
             <h3>{response.Name}</h3>
             <p className = 'text-sm'>{response.Address}</p>
             
