@@ -6,9 +6,9 @@ import aiohttp
 
 from ApiWrappers.inrixAppAPIs import inrix_page
 from ApiWrappers.weatherApi import weather_page, handle_weather_req
-from ApiWrappers.inrixDistanceApi import inrix_distance
+from ApiWrappers.inrixDistanceApi import inrix_distance, handle_dist_time_req
 from ApiWrappers.bestTimeApi import besttime_page
-from ApiWrappers.noiseApi import noise_page
+from ApiWrappers.noiseApi import noise_page, handle_noise_req
 from ApiWrappers.geocodeApi import geocode_page
 
 app = Flask(__name__)
@@ -68,9 +68,7 @@ async def places():
             continue
 
         # Calculates the distance and time
-        distancetime_result = await fetch(HOME_URL + routes[2],
-                                          params={"wp_1lat": lat, "wp_1long": lon, "wp_2lat": res[i]["Latitude"],
-                                                  "wp_2long": res[i]["Longitude"]})
+        distancetime_result = handle_dist_time_req(lat, lon, res[i]["Latitude"], res[i]["Longitude"])
         distance.append((distancetime_result["totalDistance"], i))
         if float(distancetime_result["totalDistance"]) > float(distance_thres):
             res[i]=None
@@ -94,8 +92,7 @@ async def places():
     for i in range(len(res)):
         if not res[i]:
             continue
-        noise_result = await fetch(HOME_URL + routes[3],
-                                   params={"lat": res[i]["Latitude"], "long": res[i]["Longitude"]})
+        noise_result = handle_noise_req(res[i]["Latitude"], res[i]["Longitude"])
         if float(noise_result[0]['score']) > noise_thres:
             res[i]=None
         noise.append((noise_result[0]['score'], i))
