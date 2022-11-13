@@ -3,17 +3,20 @@ import json
 import requests
 
 from ApiWrappers.inrixAppAPIs import inrix_page
-from ApiWrappers.weatherApi import weather
+from ApiWrappers.weatherApi import weather_page
 from ApiWrappers.inrixDistanceApi import inrix_distance
 from ApiWrappers.bestTimeApi import besttime_page
+from ApiWrappers.noiseApi import noise_page
+from ApiWrappers.geocodeApi import geocode_page
 
 app = Flask(__name__)
 
 app.register_blueprint(inrix_page, url_prefix="/inrix")
-app.register_blueprint(weather, url_prefix='/weather')
+app.register_blueprint(weather_page, url_prefix='/weather')
 app.register_blueprint(inrix_distance, url_prefix='/route')
 app.register_blueprint(besttime_page, url_prefix='/besttime')
-
+app.register_blueprint(noise_page,url_prefix='/noise')
+app.register_blueprint(geocode_page,url_prefix='/geocode')
 
 @app.route("/")
 def home():
@@ -29,19 +32,7 @@ def places():
     return jsonify(res)
 
 
-# \d{1,5}\s\w.\s(\b\w*\b\s){1,2}\w*\.
-@app.route("/txtToPoint")
-def address_to_point():
-    address = request.args.get("searchText")
-    with open("./ConfigFiles/ptv.json", "r") as fp:
-        res = json.loads(fp.read())
 
-    params = {"apiKey": res["apikey"], "searchText": address}
 
-    url = "https://api.myptv.com/geocoding/v1/locations/by-text"
 
-    result = requests.get(url, params=params)
-    if len(result.json()['locations']) == 0:
-        return jsonify("No Result")
 
-    return jsonify(result.json()['locations'][:10])

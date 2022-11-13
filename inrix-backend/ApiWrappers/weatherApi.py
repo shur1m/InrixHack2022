@@ -2,7 +2,7 @@ from flask import Blueprint, request,jsonify
 import requests
 
 
-weather = Blueprint('weather', __name__)
+weather_page = Blueprint('weather', __name__)
 WMO = {
     0: "Clear Sky",
     1: "Mainly Clear",
@@ -23,7 +23,7 @@ WMO = {
 }
 
 
-@weather.route('/weather')
+@weather_page.route('/weather')
 def get_weather():
     # https://api.open-meteo.com/v1/forecast?latitude=55.6763&longitude=12.5681&hourly=temperature_2m
     params = dict()
