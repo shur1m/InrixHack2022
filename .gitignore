@@ -1,3 +1,7 @@
 *.env
 .DS_Store
 inrix-hack-site/node_modules
+inrix-backend/ConfigFiles/besttime.json
+inrix-backend/ConfigFiles/howloud.json
+inrix-backend/ConfigFiles/inrix_app.json
+inrix-backend/ConfigFiles/ptv.json
