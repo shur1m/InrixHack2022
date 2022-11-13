@@ -5,6 +5,7 @@ import IconButton from './components/IconButton'
 import { BiSearch, BiFilterAlt } from "react-icons/bi"
 import {DisplayMapFC} from "./components/DisplayMapFC"
 import Geolocation from "./components/Geolocation"
+import getLocations from './actions/GetLocations';
 import myData from './data.json';
 
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
@@ -12,6 +13,15 @@ import { Icon } from 'leaflet';
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 
 function App() {
+   getLocations({
+    lat: 37.742120,
+    long: -122.480110,
+    noise: 70,
+    distance: 20,
+    time: 10,
+    indoor: false,
+  }).then((result) => console.log('Returned value:', result))
+
   const searchBar = () => {}
   const [searchInput, setSearchInput] = useState("")
   const [showFilter, setShowFilter] = useState(false)
