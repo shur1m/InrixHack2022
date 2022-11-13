@@ -4,6 +4,7 @@ inrix_requests = InrixAPI()
 
 inrix_distance = Blueprint('inrix_distance', __name__)
 
+
 def handle_dist_time_req(wp_1lat, wp_1long, wp_2lat, wp_2long):
     params = {
         "format": "json",
@@ -12,22 +13,18 @@ def handle_dist_time_req(wp_1lat, wp_1long, wp_2lat, wp_2long):
     find_routes = inrix_requests.get("https://api.iq.inrix.com/findRoute", params)
     print(find_routes)
 
-    return jsonify({
+    return {
         "travelTime": find_routes.get('result').get('trip').get("routes")[0].get('totalDistance'),
         "totalDistance": find_routes.get('result').get('trip').get("routes")[0].get('travelTimeMinutes')
-    })
+    }
+
 
 @inrix_distance.route('/distancetime')
 def get_distance_and_travel_time():
-    params = {
-        "format": "json",
-        "wp_1": f'{request.args.get("wp_1lat")},{request.args.get("wp_1long")}',
-        "wp_2": f'{request.args.get("wp_2lat")},{request.args.get("wp_2long")}'}
-   
-    return handle_dist_time_req(
+    return jsonify(handle_dist_time_req(
         request.args.get("wp_1lat"), request.args.get("wp_1long"),
         request.args.get("wp_2lat"), request.args.get("wp_2long")
-   )
+    ))
 
 
 
