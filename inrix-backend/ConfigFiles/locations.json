@@ -4,7 +4,7 @@
     "Address": "201 Octavia St San Francisco, CA 94102 United States",
     "Latitude": 37.77398181777092,
     "Longitude": -122.42423498381062,
-    "Busyness": 35,
+    "Busyness": 25,
     "Temperature":  67,
     "Indoor": true,
     "PlaceType": "CAFE"
@@ -24,7 +24,7 @@
     "Address": "724 Bush St, San Francisco, CA 94108",
     "Latitude": 37.79019971780266,
     "Longitude": -122.40934180049014,
-    "Busyness": 78,
+    "Busyness": 15,
     "Temperature":  54,
     "Indoor": true,
     "PlaceType": "CAFE"
@@ -44,7 +44,7 @@
     "Address": "100 Larkin St, San Francisco, CA 94102",
     "Latitude": 37.779083838052884,
     "Longitude": -122.4157931586608,
-    "Busyness": 78,
+    "Busyness": 45,
     "Temperature":  54,
     "Indoor": true,
     "PlaceType": "LIBRARY"
@@ -54,7 +54,7 @@
     "Address": "301 8th St #215, San Francisco, CA 94103",
     "Latitude": 37.775025963943186,
     "Longitude": -122.40951497651372,
-    "Busyness": 78,
+    "Busyness": 50,
     "Temperature":  54,
     "Indoor": true,
     "PlaceType": "LIBRARY"
@@ -64,7 +64,7 @@
     "Address": "1023 Market St, San Francisco, CA 94103",
     "Latitude": 37.781678908588816,
     "Longitude": -122.4107192944928,
-    "Busyness": 78,
+    "Busyness": 30,
     "Temperature":  54,
     "Indoor": true,
     "PlaceType": "LIBRARY"
@@ -74,7 +74,7 @@
     "Address": "151 3rd St, San Francisco, CA 94103",
     "Latitude": 37.7857309220213,
     "Longitude": -122.40103205964897,
-    "Busyness": 78,
+    "Busyness": 33,
     "Temperature":  54,
     "Indoor": true,
     "PlaceType": "LIBRARY"
@@ -84,7 +84,7 @@
     "Address": "Gough St &, Washington St, San Francisco, CA 94109",
     "Latitude": 37.79157738752768,
     "Longitude": -122.4275772295539,
-    "Busyness": 78,
+    "Busyness": 30,
     "Temperature":  54,
     "Indoor": false,
     "PlaceType": "PARK"
@@ -94,7 +94,7 @@
     "Address": "950 Gough St, San Francisco, CA 94102",
     "Latitude": 37.78183659314452,
     "Longitude": -122.42568461079831,
-    "Busyness": 78,
+    "Busyness": 45,
     "Temperature":  54,
     "Indoor": false,
     "PlaceType": "PARK"
@@ -104,7 +104,7 @@
     "Address": "425 Mission St, San Francisco, CA 94105",
     "Latitude": 37.78972101491579,
     "Longitude": -122.3961675140821,
-    "Busyness": 78,
+    "Busyness": 25,
     "Temperature":  54,
     "Indoor": false,
     "PlaceType": "PARK"
