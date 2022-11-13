@@ -50,15 +50,14 @@ function App() {
     },
   ]
 
-
-
-
   return (
     <>
       {/* sidebar to display results */}
-      <div className = 'bg-slate-500 test fixed left-0 top-1/2 z-30 rounded-3xl'></div>
-      <div className = 'bg-blue-100 test fixed left-0 top-1/2 z-0'></div>
+      <div className = 'bg-gray-600 test fixed left-0 top-8 z-30 rounded-3xl p-4 text-white'>
+        {results.map((result, index) => (<p key = {index}>{result.location}</p>))}
+      </div>
 
+      {/* filter and search bar  */}
       <div>
         <div className = 'flex justify-center items-center'>
           <h1 className ='text-center pt-3'> Hello, Let's Find Someplace Quiet </h1>
@@ -66,7 +65,7 @@ function App() {
         
         {/* search bar centered */}
         <div className = 'flex space-x-4 px-6 py-2 bg-gray-600 rounded-full m-3 max-w-xl mx-auto'>
-          <input className = 'flex-grow max-w-md focus:outline-0 bg-transparent placeholder-white text-white m-1'
+          <input className = 'flex-grow max-w-md focus:outline-0 bg-transparent placeholder-gray-400 text-white m-1'
             type="text"
             placeholder="Your Location"
             onChange={handleSearchBarChange} value={searchInput}
@@ -133,10 +132,6 @@ function App() {
           }
         </div>
 
-      </div>
-
-      <div>
-          {results.map((result, index) => (<p key = {index}>{result.location}</p>))}
       </div>
     </>
   );
