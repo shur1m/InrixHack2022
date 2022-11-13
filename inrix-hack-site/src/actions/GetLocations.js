@@ -1,4 +1,3 @@
-
 //get weather for api
 const getLocations = async (props) => {
 

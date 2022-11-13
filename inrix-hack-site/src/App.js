@@ -13,14 +13,14 @@ import { Icon } from 'leaflet';
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 
 function App() {
-   getLocations({
+  const params = {
     lat: 37.742120,
     long: -122.480110,
     noise: 70,
     distance: 20,
     time: 10,
     indoor: false,
-  }).then((result) => console.log('Returned value:', result))
+  }
 
   const searchBar = () => {}
   const [searchInput, setSearchInput] = useState("")
@@ -44,8 +44,21 @@ function App() {
   //hardcoded data
   let results = myData
 
+  //query the api and place everything in sidebar and map
   const onSearch = () => {
+    //SET THIS BACK LATER
     setResponses(results)
+    
+
+    // getLocations(params)
+    // .then((result) => result.json())
+    // .then((result) => {
+    //   setResponses(result)
+    // })
+  }
+
+  const onSelection = (index) => {
+    console.log(index)
   }
 
   let coords = Geolocation()
@@ -57,7 +70,7 @@ function App() {
       {/* sidebar to display results */}
       <div className = 'overflow-auto bg-gray-600 sidebar fixed left-8 top-8 z-30 rounded-3xl  text-white'>
         {responses.map((response, index) => (
-          <div key = {index} className = 'location bg-gray-500 my-2 p-2 rounded-lg'>
+          <div key = {index} className = 'location bg-gray-500 my-2 p-2 rounded-lg' onClick = {() => {onSelection(index)}}>
             <h3>{response.Name}</h3>
             <p className = 'text-sm'>{response.Address}</p>
             
