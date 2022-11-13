@@ -19,6 +19,7 @@ def get_distance_and_travel_time():
     })
 
 
+
 # ?wp_1=37.770581%2C-122.442550&wp_2=37.765297%2C-122.442527&format=json
 @inrix_distance.route('/route')
 def get_route():
