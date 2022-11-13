@@ -49,13 +49,24 @@ function App() {
       distance: 0,
       weather: 'rainy',
     },
+    {
+      location: 'My house',
+      travelTime: 20,
+      distance: 0,
+      weather: 'rainy',
+    },
   ]
 
   return (
     <>
       {/* sidebar to display results */}
-      <div className = 'overflow-auto bg-gray-600 sidebar fixed left-0 top-8 z-30 rounded-3xl p-4 text-white'>
-        {results.map((result, index) => (<p key = {index}>{result.location}</p>))}
+      <div className = 'overflow-auto bg-gray-600 sidebar fixed left-0 top-8 z-30 rounded-3xl py-2 text-white'>
+        {results.map((result, index) => (
+          <div className = 'location flex h-28 bg-gray-500 my-2 p-2 rounded-lg'>
+            <h3>{result.location}</h3>
+            
+          </div>
+        ))}
       </div>
 
       <DisplayMapFC/>
