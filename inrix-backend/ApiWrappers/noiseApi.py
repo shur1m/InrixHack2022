@@ -16,4 +16,4 @@ def get_noise_level():
         api_key = json.loads(fp.read())['apiKey']
     headers = {'x-api-key':api_key}
     result = requests.get(url, params=params, headers=headers)
-    return result.json()['result']
+    return jsonify(result.json()['result'])
