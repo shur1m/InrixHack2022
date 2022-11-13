@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/InrixHack2022/static/css/main.1fcaa5ae.css",
-    "main.js": "/InrixHack2022/static/js/main.0458f231.js",
+    "main.css": "/InrixHack2022/static/css/main.dbb1fa21.css",
+    "main.js": "/InrixHack2022/static/js/main.5615a4c0.js",
     "static/js/787.da5cb1e8.chunk.js": "/InrixHack2022/static/js/787.da5cb1e8.chunk.js",
+    "static/media/redPin.png": "/InrixHack2022/static/media/redPin.4a41852262cf6c43e19c.png",
     "index.html": "/InrixHack2022/index.html",
-    "main.1fcaa5ae.css.map": "/InrixHack2022/static/css/main.1fcaa5ae.css.map",
-    "main.0458f231.js.map": "/InrixHack2022/static/js/main.0458f231.js.map",
+    "main.dbb1fa21.css.map": "/InrixHack2022/static/css/main.dbb1fa21.css.map",
+    "main.5615a4c0.js.map": "/InrixHack2022/static/js/main.5615a4c0.js.map",
     "787.da5cb1e8.chunk.js.map": "/InrixHack2022/static/js/787.da5cb1e8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1fcaa5ae.css",
-    "static/js/main.0458f231.js"
+    "static/css/main.dbb1fa21.css",
+    "static/js/main.5615a4c0.js"
   ]
 }
