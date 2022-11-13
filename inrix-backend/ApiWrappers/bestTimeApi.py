@@ -17,7 +17,7 @@ def find_busyness():
     address = request.args.get("address")
     url = "https://besttime.app/api/v1/forecasts"
 
-    with open("../ConfigFiles/besttime.json", "r") as fp:
+    with open("./ConfigFiles/besttime.json", "r") as fp:
         api_keys = json.loads(fp.read())
 
     params = {

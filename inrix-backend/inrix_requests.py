@@ -14,7 +14,7 @@ class InrixAPI:
         result = requests.get(url, headers=header, params=params)
         return result.json()
 
-    def get_auth_token(self, settings_path="./inrix_app.json"):
+    def get_auth_token(self, settings_path="./ConfigFiles/inrix_app.json"):
         app_request_header = {"Accept": "application/json"}
 
         with open(settings_path, "r") as fp:
