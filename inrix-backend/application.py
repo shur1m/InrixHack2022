@@ -13,7 +13,7 @@ from ApiWrappers.noiseApi import noise_page, handle_noise_req
 from ApiWrappers.geocodeApi import geocode_page
 
 app = Flask(__name__)
-
+CORS(app)
 app.register_blueprint(inrix_page, url_prefix="/inrix")
 app.register_blueprint(weather_page, url_prefix='/weather')
 app.register_blueprint(inrix_distance, url_prefix='/route')
@@ -21,8 +21,8 @@ app.register_blueprint(besttime_page, url_prefix='/besttime')
 app.register_blueprint(noise_page, url_prefix='/noise')
 app.register_blueprint(geocode_page, url_prefix='/geocode')
 
-CORS(app)
-#app.config["CORS_ORIGINS"] = ["http://localhost"]
+
+app.config["CORS_ORIGINS"] = ["http://localhost"]
 
 async def fetch(url, params):
     async with aiohttp.request('GET', url, params=params) as resp:
@@ -42,7 +42,6 @@ HOME_URL = "https://inrix-hack-api.herokuapp.com/"
 
 # distance , travelTime, indor,outdoor,Location,address,noise
 @app.route("/places")
-
 async def places():
     lat = request.args.get("lat")
     lon = request.args.get("long")
@@ -153,7 +152,7 @@ async def places():
         res.remove(None)
 
 
-    return res
+    return jsonify(res)
     
         
 

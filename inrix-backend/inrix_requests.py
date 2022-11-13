@@ -11,9 +11,9 @@ class InrixAPI:
         self.expire_date=""
         self.c=0
     def get(self, url, params):
-        if not self.expire_date or datetime.datetime.strptime(self.expire_date,'%Y-%m-%dT%H:%M:%S.%fZ') < datetime.datetime.now():
-            self.app_token = self.get_auth_token()
-            self.c+=1
+        #if not self.expire_date or datetime.datetime.strptime(self.expire_date,'%Y-%m-%dT%H:%M:%S.%fZ') < datetime.datetime.now():
+        self.app_token = self.get_auth_token()
+        self.c+=1
         #print(self.c)
         header = {"Authorization": f"Bearer {self.app_token}"}
         result = requests.get(url, headers=header, params=params)
