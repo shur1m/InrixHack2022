@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 const IconButton = ({icon, onClick}) => {
   return (
     <button
-			className = 'bg-gray-700 text-white rounded-lg p-2'
+			className = 'bg-gray-700 text-white rounded-xl p-2'
 			onClick = {onClick}
 		> 
-        {icon}
+		{icon}
     </button>
   )
 }
@@ -17,7 +17,7 @@ IconButton.defaultProps = {
 }
 
 IconButton.propTypes = {
-	text : PropTypes.string,
+	//icon should be type icon obviously
 	onClick : PropTypes.func,
 }
 
