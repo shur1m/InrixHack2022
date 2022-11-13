@@ -7,6 +7,8 @@ import {DisplayMapFC} from "./components/DisplayMapFC"
 import Geolocation from "./components/Geolocation"
 import myData from './data.json';
 
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
+
 function App() {
   const searchBar = () => {}
   const [searchInput, setSearchInput] = useState("")
@@ -31,6 +33,7 @@ function App() {
   let coords = Geolocation()
   console.log(coords != undefined)
 
+
   return (
     <>
       {/* sidebar to display results */}
@@ -45,7 +48,12 @@ function App() {
       </div>
       
       {/* display map */}
-      <DisplayMapFC/>
+      <MapContainer className = 'h-screen z-0' center={{lng: -122.673447, lat: 45.522558}} zoom={10} scrollWheelZoom={false} >
+         <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      </MapContainer>
 
       {/* filter and search bar  */}
       <div className = 'fixed left-0 top-0 z-10 w-screen'>
