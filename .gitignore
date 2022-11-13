@@ -1,4 +1,4 @@
-
+*.env
 .DS_Store
 inrix-hack-site/node_modules
 inrix-backend/inrix_app.json
