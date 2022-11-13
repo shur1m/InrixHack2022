@@ -24,7 +24,7 @@ def get_distance_and_travel_time():
         "wp_1": f'{request.args.get("wp_1lat")},{request.args.get("wp_1long")}',
         "wp_2": f'{request.args.get("wp_2lat")},{request.args.get("wp_2long")}'}
    
-   return handle_dist_time_req(
+    return handle_dist_time_req(
         request.args.get("wp_1lat"), request.args.get("wp_1long"),
         request.args.get("wp_2lat"), request.args.get("wp_2long")
    )
